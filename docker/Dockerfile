@@ -7,15 +7,13 @@ RUN apt-get update && apt-get install -y curl wget unzip gnupg2 ca-certificates 
     && npm install -g npm@latest \
     && node -v && npm -v
 
-# ── GitHub CLI ────────────────────────────────────────────────────────────────
-RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-        | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] \
-        https://cli.github.com/packages stable main" \
-        | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-    && apt-get update && apt-get install -y gh \
-    && gh --version
+# ── GitLab CLI ────────────────────────────────────────────────────────────────
+RUN curl -fsSL https://gitlab.com/gitlab-org/cli/-/releases/permalink/latest/downloads/glab_linux_amd64.tar.gz \
+        -o glab.tar.gz \
+    && tar -xzf glab.tar.gz \
+    && mv bin/glab /usr/local/bin/ \
+    && rm -rf glab.tar.gz bin/ \
+    && glab --version
 
 # ── GitHub Copilot CLI (Official) ─────────────────────────────────────────────
 RUN curl -fsSL https://gh.io/copilot-install | bash \
