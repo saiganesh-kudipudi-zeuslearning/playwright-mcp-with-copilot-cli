@@ -1,0 +1,71 @@
+name: AI Playwright Generation
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: "Custom prompt (leave blank to use prompts/build-todo.txt)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.GH_COPILOT_TOKEN }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Verify Copilot CLI
+        run: copilot --version
+
+      - name: Verify GitHub CLI
+        run: gh --version
+
+      - name: Configure Git Identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Resolve Prompt
+        run: |
+          ./.github/scripts/resolve-prompt.sh "${{ inputs.prompt }}"
+
+      - name: Generate Feature Branch
+        run: |
+          ./.github/scripts/generate-branch-name.sh
+
+      - name: Run AI Generation
+        run: |
+          ./.github/scripts/run-ai-generation.sh
+
+      - name: Generate PR Title
+        run: |
+          ./.github/scripts/generate-pr-title.sh
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          ./.github/scripts/create-pr.sh

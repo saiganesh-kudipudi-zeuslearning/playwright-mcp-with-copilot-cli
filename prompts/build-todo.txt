@@ -1,0 +1,10 @@
+
+Generate a complete BDD test scenario for adding a todo item successfully.
+
+Use the Playwright MCP tools to explore https://demo.playwright.dev/todomvc:
+1. Launch browser and navigate to the URL
+2. Inspect the page structure and identify stable selectors
+3. Capture key interaction points
+4. Generate feature file, page object, and step definitions
+
+Follow the playwright-bdd-generator agent instructions.
