@@ -24,4 +24,4 @@ jobs:
           context: ./docker
           file: ./docker/Dockerfile
           push: true
-          tags: yourorg/my-playwright-custom:pw1.52.0-v1
+          tags: ${{ secrets.DOCKER_USERNAME }}/my-playwright-custom:pw1.52.0-v1
