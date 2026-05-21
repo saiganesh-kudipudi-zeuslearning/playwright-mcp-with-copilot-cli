@@ -8,11 +8,12 @@ RUN apt-get update && apt-get install -y curl wget unzip gnupg2 ca-certificates 
     && node -v && npm -v
 
 # ── GitLab CLI ────────────────────────────────────────────────────────────────
-RUN curl -fsSL https://gitlab.com/gitlab-org/cli/-/releases/permalink/latest/downloads/glab_linux_amd64.tar.gz \
-        -o glab.tar.gz \
-    && tar -xzf glab.tar.gz \
-    && mv bin/glab /usr/local/bin/ \
-    && rm -rf glab.tar.gz bin/ \
+RUN GLAB_VERSION=$(curl -s "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases" \
+        | grep -o '"tag_name":"[^"]*' | head -1 | cut -d'"' -f4 | tr -d 'v') \
+    && curl -fsSL "https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb" \
+        -o glab.deb \
+    && dpkg -i glab.deb \
+    && rm glab.deb \
     && glab --version
 
 # ── GitHub Copilot CLI (Official) ─────────────────────────────────────────────
