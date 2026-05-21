@@ -1,4 +1,4 @@
-name: Verify Custom Image
+- name: Verify tools in custom image
 
 on:
   workflow_dispatch:   # manual trigger only
@@ -8,10 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Verify tools in custom image
-        run: |
-          docker run --rm ${{ secrets.DOCKER_USERNAME }}/my-playwright-custom:pw1.59.1-v1 bash -c "
-            echo '=== Node ===' && node --version &&
-            echo '=== NPM ===' && npm --version &&
-            echo '=== GH CLI ===' && gh --version &&
-            echo '=== Copilot CLI ===' && github-copilot-cli --version || true
-          "
+    run: |
+      docker run --rm ${{ secrets.DOCKER_USERNAME }}/my-playwright-custom:pw1.59.1-v1 bash -c "
+        echo '=== Node ===' && node --version &&
+        echo '=== NPM ===' && npm --version &&
+        echo '=== GH CLI ===' && gh --version &&
+        echo '=== Copilot CLI ===' && copilot --version || true &&
+        echo '=== Playwright ===' && npx playwright --version
+      "
