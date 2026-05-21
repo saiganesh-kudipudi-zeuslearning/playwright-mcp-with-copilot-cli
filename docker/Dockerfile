@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.52.0-jammy
+FROM mcr.microsoft.com/playwright:v1.59.1-jammy
 
 # ── Node.js (latest LTS via NodeSource) ──────────────────────────────────────
 RUN apt-get update && apt-get install -y curl wget unzip gnupg2 ca-certificates \
