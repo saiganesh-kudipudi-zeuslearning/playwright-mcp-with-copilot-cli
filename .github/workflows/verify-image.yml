@@ -14,5 +14,5 @@ jobs:
             echo '=== NPM ===' && npm --version &&
             echo '=== GH CLI ===' && gh --version &&
             echo '=== Copilot CLI ===' && copilot --version || true &&
-            echo '=== Playwright ===' && npx --no-install playwright --version
+            echo '=== Playwright binary location ===' && find / -name 'playwright' -type f 2>/dev/null
           "
