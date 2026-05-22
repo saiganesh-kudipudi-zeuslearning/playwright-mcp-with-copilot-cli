@@ -15,4 +15,5 @@ jobs:
             echo '=== Playwright ===' && npx --no-install playwright --version &&
             echo '=== GitLab CLI ===' && glab --version &&
             echo '=== Copilot CLI ===' && copilot --version || true
+            echo '=== MCP Server Check ===' && npx --no-install playwright run-test-mcp-server --help || echo "MCP server not found ❌"
           "
