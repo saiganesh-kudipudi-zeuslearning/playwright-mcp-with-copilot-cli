@@ -7,9 +7,25 @@ RUN apt-get update && apt-get install -y curl wget unzip gnupg2 ca-certificates 
     && npm install -g npm@latest \
     && node -v && npm -v
 
-# ── Playwright (pre-installed globally so npx doesn't download it) ────────────
-RUN npm install -g @playwright/test@1.59.1 playwright@1.59.1 \
-    && npx --no-install playwright --version
+# ── Pre-install all project dependencies globally ─────────────────────────────
+RUN npm install -g \
+    @cucumber/cucumber@^10.0.0 \
+    @playwright/test@^1.58.2 \
+    @types/node@^20.9.4 \
+    allure-commandline@^2.29.0 \
+    allure-playwright@2.15.1 \
+    cross-env@^7.0.3 \
+    nodemon@^3.0.1 \
+    npm-run-all@^1.1.3 \
+    pirates@^4.0.7 \
+    playwright-bdd@^8.5.0 \
+    typescript@^5.3.2 \
+    @axe-core/playwright@^4.10.2 \
+    axios@^1.7.7 \
+    dotenv@^16.4.5
+
+# ── Set NODE_PATH so projects find global packages ────────────────────────────
+ENV NODE_PATH=/usr/lib/node_modules
 
 # ── GitLab CLI ────────────────────────────────────────────────────────────────
 RUN GLAB_VERSION=$(curl -s "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases" \

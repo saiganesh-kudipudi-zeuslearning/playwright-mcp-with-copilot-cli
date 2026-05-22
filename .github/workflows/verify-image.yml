@@ -16,4 +16,8 @@ jobs:
             echo '=== GitLab CLI ===' && glab --version &&
             echo '=== Copilot CLI ===' && copilot --version || true
             echo '=== MCP Server Check ===' && npx --no-install playwright run-test-mcp-server --help || echo "MCP server not found ❌"
+            echo '=== NODE_PATH ===' && echo \$NODE_PATH &&
+            echo '=== @playwright/test exists? ===' && ls \$NODE_PATH/@playwright/test &&
+            echo '=== @cucumber/cucumber exists? ===' && ls \$NODE_PATH/@cucumber/cucumber &&
+            echo '=== playwright-bdd exists? ===' && ls \$NODE_PATH/playwright-bdd &&
           "
