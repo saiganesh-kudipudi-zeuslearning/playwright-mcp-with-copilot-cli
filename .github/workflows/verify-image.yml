@@ -12,7 +12,7 @@ jobs:
           docker run --rm ${{ secrets.DOCKER_USERNAME }}/my-playwright-custom:pw1.59.1-v2 bash -c "
             echo '=== Node ===' && node --version &&
             echo '=== NPM ===' && npm --version &&
-            echo '=== Glab CLI ===' && glab --version &&
-            echo '=== Copilot CLI ===' && copilot --version || true &&
-            echo '=== Playwright binary location ===' && find / -name 'playwright' -type f 2>/dev/null
+            echo '=== Playwright ===' && npx --no-install playwright --version &&
+            echo '=== GitLab CLI ===' && glab --version &&
+            echo '=== Copilot CLI ===' && copilot --version || true
           "

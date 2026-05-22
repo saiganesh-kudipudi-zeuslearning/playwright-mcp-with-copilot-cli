@@ -7,6 +7,10 @@ RUN apt-get update && apt-get install -y curl wget unzip gnupg2 ca-certificates 
     && npm install -g npm@latest \
     && node -v && npm -v
 
+# ── Playwright (pre-installed globally so npx doesn't download it) ────────────
+RUN npm install -g @playwright/test \
+    && npx --no-install playwright --version
+
 # ── GitLab CLI ────────────────────────────────────────────────────────────────
 RUN GLAB_VERSION=$(curl -s "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases" \
         | grep -o '"tag_name":"[^"]*' | head -1 | cut -d'"' -f4 | tr -d 'v') \
