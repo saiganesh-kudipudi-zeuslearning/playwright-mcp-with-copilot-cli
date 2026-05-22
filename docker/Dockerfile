@@ -25,7 +25,7 @@ RUN npm install -g \
     dotenv@16.4.5
 
 # ── Set NODE_PATH so projects find global packages ────────────────────────────
-ENV NODE_PATH=/usr/lib/node_modules:/usr/local/lib/node_modules
+ENV NODE_PATH=/usr/lib/node_modules:/usr/local/lib/node_modules:/usr/lib/node_modules/@playwright/test/node_modules
 
 # ── GitLab CLI ────────────────────────────────────────────────────────────────
 RUN GLAB_VERSION=$(curl -s "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases" \
