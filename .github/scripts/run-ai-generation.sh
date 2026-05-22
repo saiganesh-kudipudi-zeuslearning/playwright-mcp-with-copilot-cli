@@ -8,14 +8,14 @@ MODEL="gpt-4.1"
 
 echo "Using model: $MODEL"
 
-# echo "STEP 2 - Ensure MCP Server Exists"
+echo "STEP 2 - Ensure MCP Server Exists"
 
-# if copilot mcp list | grep -q "playwright-test"; then
-#   echo "MCP server already exists: playwright-test"
-# else
-#   copilot mcp add playwright-test --tools "*" -- npx playwright run-test-mcp-server
-#   echo "MCP server added: playwright-test"
-# fi
+if copilot mcp list | grep -q "playwright-test"; then
+  echo "MCP server already exists: playwright-test"
+else
+  copilot mcp add playwright-test --tools "*" -- npx playwright run-test-mcp-server
+  echo "MCP server added: playwright-test"
+fi
 
 echo "STEP 3 - Resolve Prompt"
 
@@ -34,7 +34,7 @@ echo ""
 echo "Resolved Prompt:"
 echo "$PROMPT"
 
-npx copilot \
+copilot \
   --model "$MODEL" \
   --agent playwright-bdd-generator \
   --prompt "$PROMPT" \
