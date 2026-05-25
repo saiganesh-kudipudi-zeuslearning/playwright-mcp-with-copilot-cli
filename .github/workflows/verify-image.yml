@@ -14,12 +14,5 @@ jobs:
             echo '=== NPM ===' && npm --version &&
             echo '=== GitLab CLI ===' && glab --version &&
             echo '=== Copilot CLI ===' && (copilot --version || true) &&
-            echo '=== NODE_PATH ===' && echo \$NODE_PATH &&
-            echo '=== npm root -g ===' && npm root -g &&
-            echo '=== @playwright/test exists? ===' && (ls /usr/lib/node_modules/@playwright/test || ls /usr/local/lib/node_modules/@playwright/test || echo 'Not found ❌') &&
-            echo '=== @cucumber/cucumber exists? ===' && (ls /usr/lib/node_modules/@cucumber/cucumber || ls /usr/local/lib/node_modules/@cucumber/cucumber || echo 'Not found ❌') &&
-            echo '=== playwright-bdd exists? ===' && (ls /usr/lib/node_modules/playwright-bdd || ls /usr/local/lib/node_modules/playwright-bdd || echo 'Not found ❌') &&
-            echo '=== playwright core ===' && (ls /usr/lib/node_modules/playwright || ls /usr/local/lib/node_modules/playwright || echo 'Not found ❌') &&
-            echo '=== find playwright ===' && find /usr -name 'playwright' -type d 2>/dev/null &&
-            echo '=== playwright core ===' && ls /usr/lib/node_modules/@playwright/test/node_modules/playwright || echo 'Not found ❌'
+            echo '=== AWS CLI ===' && aws --version
           "

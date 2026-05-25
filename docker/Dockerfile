@@ -7,26 +7,6 @@ RUN apt-get update && apt-get install -y curl wget unzip gnupg2 ca-certificates 
     && npm install -g npm@latest \
     && node -v && npm -v
 
-# ── Pre-install all project dependencies globally ─────────────────────────────
-RUN npm install -g \
-    @cucumber/cucumber@10.0.0 \
-    @playwright/test@1.59.1 \
-    @types/node@20.9.4 \
-    allure-commandline@2.29.0 \
-    allure-playwright@2.15.1 \
-    cross-env@7.0.3 \
-    nodemon@3.0.1 \
-    npm-run-all@1.1.3 \
-    pirates@4.0.7 \
-    playwright-bdd@8.5.0 \
-    typescript@5.3.2 \
-    @axe-core/playwright@4.10.2 \
-    axios@1.7.7 \
-    dotenv@16.4.5
-
-# ── Set NODE_PATH so projects find global packages ────────────────────────────
-ENV NODE_PATH=/usr/lib/node_modules:/usr/local/lib/node_modules:/usr/lib/node_modules/@playwright/test/node_modules
-
 # ── GitLab CLI ────────────────────────────────────────────────────────────────
 RUN GLAB_VERSION=$(curl -s "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases" \
         | grep -o '"tag_name":"[^"]*' | head -1 | cut -d'"' -f4 | tr -d 'v') \
@@ -39,6 +19,13 @@ RUN GLAB_VERSION=$(curl -s "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/
 # ── GitHub Copilot CLI (Official) ─────────────────────────────────────────────
 RUN curl -fsSL https://gh.io/copilot-install | bash \
     && copilot --version || true
+
+# ── AWS CLI v2 ────────────────────────────────────────────────────────────────
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf aws awscliv2.zip \
+    && aws --version
 
 # ── Cleanup ───────────────────────────────────────────────────────────────────
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
