@@ -40,7 +40,7 @@ copilot \
   --prompt "$PROMPT" \
   --allow-all \
   --output-format text \
-  --log-level info \
+  --log-level debug \
   --no-ask-user
 
 echo "STEP 4 - Git Status"
