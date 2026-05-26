@@ -69,3 +69,7 @@ cucumber-report/
 # Optional Generated Outputs
 generated/
 artifacts/
+
+# Copilot CLI logs
+copilot-traces.jsonl
+copilot-logs/

@@ -115,12 +115,3 @@ git commit -m "$COMMIT_MESSAGE"
 
 echo ""
 echo "Changes committed successfully"
-
-# Count how many spans were captured
-wc -l copilot-traces.jsonl
-
-# See only the LLM call spans (chat spans)
-cat copilot-traces.jsonl | grep '"name":"chat"' | wc -l
-
-# Pretty print one span to inspect the structure
-cat copilot-traces.jsonl | grep '"name":"chat"' | head -1 | python3 -m json.tool
