@@ -77,7 +77,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: copilot-traces
-          path: ${{ github.workspace }}/copilot-traces.jsonl
+          path: copilot-traces.jsonl
 
       - name: Upload Copilot Logs
         if: always()
