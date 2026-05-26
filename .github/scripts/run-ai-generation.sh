@@ -2,6 +2,11 @@
 
 set -e
 
+# ── OTel config (confirmed env vars) ─────────────────────
+export COPILOT_OTEL_FILE_EXPORTER_PATH="$GITHUB_WORKSPACE/copilot-traces.jsonl"
+export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
+# ─────────────────────────────────────────────────────────
+
 echo "STEP 1 - Configure Model"
 
 MODEL="gpt-4.1"
@@ -40,7 +45,7 @@ copilot \
   --prompt "$PROMPT" \
   --allow-all \
   --output-format text \
-  --log-level trace \
+  --log-level all \
   --log-dir ~/copilot-logs \
   --no-ask-user
 
@@ -110,3 +115,12 @@ git commit -m "$COMMIT_MESSAGE"
 
 echo ""
 echo "Changes committed successfully"
+
+# Count how many spans were captured
+wc -l copilot-traces.jsonl
+
+# See only the LLM call spans (chat spans)
+cat copilot-traces.jsonl | grep '"name":"chat"' | wc -l
+
+# Pretty print one span to inspect the structure
+cat copilot-traces.jsonl | grep '"name":"chat"' | head -1 | python3 -m json.tool

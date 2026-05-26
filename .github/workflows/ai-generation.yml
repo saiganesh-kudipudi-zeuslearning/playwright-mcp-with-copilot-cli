@@ -57,6 +57,8 @@ jobs:
           ./.github/scripts/generate-branch-name.sh
 
       - name: Run AI Generation
+        env:
+          PROMPT: ${{ env.PROMPT }}
         run: |
           ./.github/scripts/run-ai-generation.sh
 
@@ -69,3 +71,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_CLASSIC_TOKEN }}
         run: |
           ./.github/scripts/create-pr.sh
+
+      - name: Upload OTel Traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: copilot-traces
+          path: ${{ github.workspace }}/copilot-traces.jsonl
+
+      - name: Upload Copilot Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: copilot-logs
+          path: ~/copilot-logs/
